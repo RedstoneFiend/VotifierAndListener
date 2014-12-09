@@ -1,8 +1,8 @@
-# Votifier
+# GraniteVotifierListener
 
-Votifier is a Bukkit plugin whose purpose is to be notified (aka *votified*) when a vote is made on a Minecraft server top list for the server.  Votifier creates a *lightweight* server that waits for connections by Minecraft server lists and uses a simple protocol to get the required information.  Votifier is *secure*, and makes sure that all vote notifications are delivered by authentic top lists.
+GraniteVotifierListener is a Granite plugin whose purpose is to be notified (aka *votified*) when a vote is made on a Minecraft server top list for the server.  GraniteVotifierListener creates a *lightweight* server that waits for connections by Minecraft server lists and uses a simple protocol to get the required information.  GraniteVotifierListener is *secure*, and makes sure that all vote notifications are delivered by authentic top lists.
 
-## Configuring Votifier
+## Configuring GraniteVotifierListener
 
 Votifier configures itself the first time it is run.
 
@@ -33,17 +33,17 @@ Vote listeners can be compiled by including Votifier in the class path. For exam
 
 ## Encryption
 
-Votifier uses one-way RSA encryption to ensure that only a trusted toplist can tell Votifier when a vote has been made.  When it is first run, Votifier will generate a 2048 bit RSA key pair and store the keys in the `./plugins/votifier/rsa` directory.  When you link Votifier with a toplist, the toplist will ask you for your Votifier public key - this is located at `./plugins/votifier/rsa/public.key` and the toplist will use this key to encrypt vote data.  It is essential that you do not share these keys with your players, as a smart player can use the key to create a spoof packet and tell Votifier that they voted when they really didn't.
+GraniteVotifierListener uses one-way RSA encryption to ensure that only a trusted toplist can tell GraniteVotifierListener when a vote has been made.  When it is first run, GraniteVotifierListener will generate a 2048 bit RSA key pair and store the keys in the `./plugins/votifier/rsa` directory.  When you link GraniteVotifierListener with a toplist, the toplist will ask you for your GraniteVotifierListener public key - this is located at `./plugins/votifier/rsa/public.key` and the toplist will use this key to encrypt vote data.  It is essential that you do not share these keys with your players, as a smart player can use the key to create a spoof packet and tell GraniteVotifierListener that they voted when they really didn't.
 
 ## Protocol Documentation
 
-This documentation is for server lists that wish to add Votifier support.
+This documentation is for server lists that wish to add GraniteVotifierListener support.
 
-A connection is made to the Votifier server by the server list, and immediately Votifier will send its version in the following packet:
+A connection is made to the GraniteVotifierListener server by the server list, and immediately GraniteVotifierListener will send its version in the following packet:
 
 	"VOTIFIER <version>"
 
-Votifier then expects a 256 byte RSA encrypted block (the public key should be obtained by the Votifier user), with the following format:
+GraniteVotifierListener then expects a 256 byte RSA encrypted block (the public key should be obtained by the GraniteVotifierListener user), with the following format:
 
 <table>
   <tr>
