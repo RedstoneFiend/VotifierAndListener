@@ -1,12 +1,12 @@
-# GraniteVotifierListener
+# VotifierAndListener
 
-GraniteVotifierListener is a Granite plugin whose purpose is to be notified (aka *votified*) when a vote is made on a Minecraft server top list for the server.  GraniteVotifierListener creates a *lightweight* server that waits for connections by Minecraft server lists and uses a simple protocol to get the required information.  GraniteVotifierListener is *secure*, and makes sure that all vote notifications are delivered by authentic top lists.
+VotifierAndListener (Val) is a Granite plugin whose purpose is to be notified (aka *votified*) when a vote is made on a Minecraft server top list for the server.  Val creates a *lightweight* server that waits for connections by Minecraft server lists and uses a simple protocol to get the required information.  Val is *secure*, and makes sure that all vote notifications are delivered by authentic top lists.
 
-## Configuring GraniteVotifierListener
+## Configuring VotifierAndListener
 
-Votifier configures itself the first time it is run.
+Val configures itself the first time it is run.
 
-If you want to customize Votifier, simply the edit `./plugins/votifier/config.yml` file.
+If you want to customize Val, simply the edit `./plugins/votifier/config.yml` file.
 
 ## Writing Vote Listeners
 
@@ -27,23 +27,23 @@ A basic vote listener looks something like this:
 
 ## Compiling Vote Listeners
 
-Vote listeners can be compiled by including Votifier in the class path. For example:
+Vote listeners can be compiled by including Val in the class path. For example:
 
 	javac -cp Votifier.jar FlatfileVoteListener.java
 
 ## Encryption
 
-GraniteVotifierListener uses one-way RSA encryption to ensure that only a trusted toplist can tell GraniteVotifierListener when a vote has been made.  When it is first run, GraniteVotifierListener will generate a 2048 bit RSA key pair and store the keys in the `./plugins/votifier/rsa` directory.  When you link GraniteVotifierListener with a toplist, the toplist will ask you for your GraniteVotifierListener public key - this is located at `./plugins/votifier/rsa/public.key` and the toplist will use this key to encrypt vote data.  It is essential that you do not share these keys with your players, as a smart player can use the key to create a spoof packet and tell GraniteVotifierListener that they voted when they really didn't.
+Val uses one-way RSA encryption to ensure that only a trusted toplist can tell Val when a vote has been made.  When it is first run, Val will generate a 2048 bit RSA key pair and store the keys in the `./plugins/votifier/rsa` directory.  When you link Val with a toplist, the toplist will ask you for your Val public key - this is located at `./plugins/votifier/rsa/public.key` and the toplist will use this key to encrypt vote data.  It is essential that you do not share these keys with your players, as a smart player can use the key to create a spoof packet and tell Val that they voted when they really didn't.
 
 ## Protocol Documentation
 
-This documentation is for server lists that wish to add GraniteVotifierListener support.
+This documentation is for server lists that wish to add Val support.
 
-A connection is made to the GraniteVotifierListener server by the server list, and immediately GraniteVotifierListener will send its version in the following packet:
+A connection is made to the Val server by the server list, and immediately Val will send its version in the following packet:
 
 	"VOTIFIER <version>"
 
-GraniteVotifierListener then expects a 256 byte RSA encrypted block (the public key should be obtained by the GraniteVotifierListener user), with the following format:
+Val then expects a 256 byte RSA encrypted block (the public key should be obtained by the Val user), with the following format:
 
 <table>
   <tr>
@@ -76,4 +76,4 @@ GraniteVotifierListener then expects a 256 byte RSA encrypted block (the public 
   </tr>
 </table>
 
-The first string of value "VOTE" is an opcode check to ensure that RSA was encoded and decoded properly, if this value is wrong then Votifier assumes that there was a problem with encryption and drops the connection. `serviceName` is the name of the top list service, `username` is the username (entered by the voter) of the person who voted, `address` is the IP address of the voter, and `timeStamp` is the time stamp of the vote.  Each string is delimited by the newline character `\n` (byte value 10).  The `space` block is the empty space that is left over, **the block must be exactly 256 bytes** regardless of how much information it holds.
+The first string of value "VOTE" is an opcode check to ensure that RSA was encoded and decoded properly, if this value is wrong then Val assumes that there was a problem with encryption and drops the connection. `serviceName` is the name of the top list service, `username` is the username (entered by the voter) of the person who voted, `address` is the IP address of the voter, and `timeStamp` is the time stamp of the vote.  Each string is delimited by the newline character `\n` (byte value 10).  The `space` block is the empty space that is left over, **the block must be exactly 256 bytes** regardless of how much information it holds.
